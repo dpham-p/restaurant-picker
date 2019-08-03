@@ -1,12 +1,16 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   return (
-    <div className='navbar navbar-expand-lg navbar-dark bg-dark'>
+    <div
+      className='navbar navbar-expand-lg navbar-dark bg-dark'
+      role='navigation'
+    >
       <div className='container'>
-        <a className='navbar-brand' href='/'>
-          Restaurant Picker
-        </a>
+        <Link to='/' className='navbar-brand'>
+          <h1>Restaurant Picker</h1>
+        </Link>
         <button
           className='navbar-toggler'
           type='button'
@@ -22,19 +26,19 @@ const Navbar = () => {
         <div className='collapse navbar-collapse' id='navbarSupportedContent'>
           <ul className='navbar-nav mr-auto'>
             <li className='nav-item'>
-              <a className='nav-link' href='/'>
+              <Link to='/login' className='nav-link'>
                 Login
-              </a>
+              </Link>
             </li>
             <li className='nav-item'>
-              <a
+              <Link
+                to='/register'
                 className='nav-link'
-                href='/'
-                tabindex='-1'
+                tabIndex='-1'
                 aria-disabled='true'
               >
                 Register
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
