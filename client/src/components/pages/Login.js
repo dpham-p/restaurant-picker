@@ -1,11 +1,42 @@
-import React from 'react';
+import React, { useContext, useState, useEffect } from 'react';
+import AuthContext from '../../context/auth/authContext';
 
-const Login = () => {
+const Login = props => {
+  const authContext = useContext(AuthContext);
+
+  const { isAuthenticated, loginUser } = authContext;
+
+  const [user, setUser] = useState({
+    email: '',
+    password: ''
+  });
+
+  const { email, password } = user;
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      props.history.push('/');
+    }
+  });
+
+  const onSubmit = e => {
+    e.preventDefault();
+    if (email === '' || password === '') {
+      console.log('Please enter all fields.');
+    } else
+      loginUser({
+        email,
+        password
+      });
+  };
+
+  const onChange = e => setUser({ ...user, [e.target.name]: e.target.value });
+
   return (
     <div className='container'>
       <div className='form-container'>
         <h1>Account Login</h1>
-        <form>
+        <form onSubmit={onSubmit}>
           <div className='form-group'>
             <label htmlFor='email'>Email Address</label>
             <input
@@ -13,6 +44,8 @@ const Login = () => {
               className='form-control'
               name='email'
               placeholder='Enter Email'
+              onChange={onChange}
+              required
             />
           </div>
           <div className='form-group'>
@@ -22,6 +55,8 @@ const Login = () => {
               className='form-control'
               name='password'
               placeholder='Enter Password'
+              onChange={onChange}
+              required
             />
           </div>
           <div className='form-group'>
@@ -29,6 +64,7 @@ const Login = () => {
               type='submit'
               className='btn btn-primary btn-block'
               name='submit'
+              value='Login'
             />
           </div>
         </form>
