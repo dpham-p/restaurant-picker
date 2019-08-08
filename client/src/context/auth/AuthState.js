@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useCallback } from 'react';
 import AuthContext from './authContext';
 import authReducer from './authReducer';
 import axios from 'axios';
@@ -26,7 +26,7 @@ const AuthState = props => {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   // Load User
-  const loadUser = async () => {
+  const loadUser = useCallback(async () => {
     setAuthToken(localStorage.token);
 
     try {
@@ -36,7 +36,7 @@ const AuthState = props => {
     } catch (err) {
       dispatch({ type: AUTH_ERROR });
     }
-  };
+  }, []);
 
   // Register User
   const registerUser = async formData => {

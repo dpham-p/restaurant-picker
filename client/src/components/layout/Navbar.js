@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { Fragment, useContext } from 'react';
 import { Link } from 'react-router-dom';
+import AuthContext from '../../context/auth/authContext';
 
 const Navbar = () => {
+  const authContext = useContext(AuthContext);
+
+  const { isAuthenticated, logoutUser } = authContext;
+
   return (
     <nav
       className='navbar navbar-expand-lg navbar-dark bg-dark'
@@ -25,21 +30,33 @@ const Navbar = () => {
 
         <div className='collapse navbar-collapse' id='navbarSupportedContent'>
           <ul className='navbar-nav mr-auto'>
-            <li className='nav-item'>
-              <Link to='/login' className='nav-link'>
-                Login
-              </Link>
-            </li>
-            <li className='nav-item'>
-              <Link
-                to='/register'
-                className='nav-link'
-                tabIndex='-1'
-                aria-disabled='true'
-              >
-                Register
-              </Link>
-            </li>
+            {isAuthenticated ? (
+              <Fragment>
+                <li className='nav-item'>
+                  <a href='#!' className='nav-link' onClick={logoutUser}>
+                    Logout
+                  </a>
+                </li>
+              </Fragment>
+            ) : (
+              <Fragment>
+                <li className='nav-item'>
+                  <Link to='/login' className='nav-link'>
+                    Login
+                  </Link>
+                </li>
+                <li className='nav-item'>
+                  <Link
+                    to='/register'
+                    className='nav-link'
+                    tabIndex='-1'
+                    aria-disabled='true'
+                  >
+                    Register
+                  </Link>
+                </li>
+              </Fragment>
+            )}
           </ul>
         </div>
       </div>
