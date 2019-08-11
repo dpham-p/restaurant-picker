@@ -14,7 +14,7 @@ const Navbar = () => {
     >
       <div className='container'>
         <Link to='/' className='navbar-brand'>
-          <h1>Restaurant Picker</h1>
+          <h2>Restaurant Picker</h2>
         </Link>
         <button
           className='navbar-toggler'

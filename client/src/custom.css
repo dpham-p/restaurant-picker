@@ -9,3 +9,22 @@
   text-align: center;
   padding: 2rem 0;
 }
+
+.rest-terms {
+  margin-right: 2.5px;
+  margin-bottom: 5px;
+}
+
+.img-box {
+  width: 100%;
+  position: relative;
+  background: 50% 50% no-repeat;
+  background-size: cover;
+  background-clip: content-box;
+}
+
+.img-box:before {
+  display: block;
+  content: '';
+  padding-top: 75%;
+}

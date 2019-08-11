@@ -22,6 +22,7 @@
   "homepage": "https://github.com/dpham-p/restaurant-picker#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "bootstrap": "^4.3.1",
     "config": "^3.2.2",
     "cors": "^2.8.5",
     "dotenv": "^8.0.0",
@@ -35,6 +36,8 @@
     "passport-google-oauth": "^2.0.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
+    "react-bootstrap": "^1.0.0-beta.11",
+    "react-geolocated": "^2.5.0",
     "socket.io": "^2.2.0",
     "yelp-fusion": "^3.0.0"
   },
