@@ -4,9 +4,7 @@ const restaurantItem = ({
   restaurant: { name, image_url, review_count, rating }
 }) => {
   const imgStyle = {
-    backgroundImage: `url(${image_url})`,
-    width: 300,
-    height: 300
+    backgroundImage: `url(${image_url})`
   };
   return (
     <div className='container'>

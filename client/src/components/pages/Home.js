@@ -39,47 +39,50 @@ const Home = () => {
   }, [loadUser, getLocation]);
 
   const [state, setState] = useState({
-    terms: restaurantTerms,
+    categories: restaurantTerms,
     location: 'Lincoln, NE',
     allActive: true
   });
 
   const [open, setOpen] = useState(false);
 
-  const { terms, location, allActive } = state;
+  const { categories, location, allActive } = state;
 
   const selectAll = e =>
     setState({
       ...state,
-      terms: restaurantTerms,
+      categories: restaurantTerms,
       allActive: true
     });
 
-  const clearAll = e => setState({ ...state, terms: [], allActive: false });
+  const clearAll = e =>
+    setState({ ...state, categories: [], allActive: false });
 
   const onClick = e => {
     if (!e.target.className.includes('active')) {
       e.target.classList.add('active');
-      setState({ ...state, terms: [...terms, e.target.textContent] });
+      setState({ ...state, categories: [...categories, e.target.textContent] });
     } else {
       e.target.classList.remove('active');
       setState({
         ...state,
-        terms: terms.filter(term => e.target.textContent !== term)
+        categories: categories.filter(
+          category => e.target.textContent !== category
+        )
       });
     }
   };
 
   const onSubmit = e => {
     e.preventDefault();
-    if (terms.length > 0) {
-      const term = terms[Math.floor(Math.random() * terms.length)];
-
+    if (categories.length > 0) {
+      const category =
+        categories[Math.floor(Math.random() * categories.length)];
+      console.log(category);
       getRestaurants({
-        term,
+        categories: category.toLowerCase(),
         latitude,
         longitude,
-        limit: 10,
         sort_by: 'rating'
       });
     }
@@ -89,7 +92,7 @@ const Home = () => {
     <Fragment>
       <div className='container' style={{ paddingTop: '2rem' }}>
         <Button
-          variant='secondary'
+          variant='outline-primary'
           onClick={() => setOpen(!open)}
           aria-controls='restaurantTypes'
           aria-expanded={open}

@@ -1,37 +1,37 @@
 import React, { Fragment, useContext } from 'react';
 import { Link } from 'react-router-dom';
+
+import Navigation from 'react-bootstrap/Navbar';
+
 import AuthContext from '../../context/auth/authContext';
 
 const Navbar = () => {
   const authContext = useContext(AuthContext);
 
-  const { isAuthenticated, logoutUser } = authContext;
+  const { isAuthenticated, logoutUser, user } = authContext;
 
   return (
-    <nav
-      className='navbar navbar-expand-lg navbar-dark bg-dark'
+    <Navigation
+      bg='dark'
+      expand='lg'
       role='navigation'
+      variant='dark'
+      sticky='top'
     >
       <div className='container'>
         <Link to='/' className='navbar-brand'>
           <h2>Restaurant Picker</h2>
         </Link>
-        <button
-          className='navbar-toggler'
-          type='button'
-          data-toggle='collapse'
-          data-target='#navbarSupportedContent'
-          aria-controls='navbarSupportedContent'
-          aria-expanded='false'
-          aria-label='Toggle navigation'
-        >
-          <span className='navbar-toggler-icon' />
-        </button>
-
-        <div className='collapse navbar-collapse' id='navbarSupportedContent'>
-          <ul className='navbar-nav mr-auto'>
+        <small className='navbar-brand'>Powered by Yelp</small>
+        <Navigation.Toggle aria-controls='basic-navbar=nav' />
+        <Navigation.Collapse id='basic-navbar-nav'>
+          <ul className='navbar-nav mr-auto' />
+          <ul className='navbar-nav'>
             {isAuthenticated ? (
               <Fragment>
+                <li className='navbar-brand'>
+                  Hello, {user && user.firstName}!
+                </li>
                 <li className='nav-item'>
                   <a href='#!' className='nav-link' onClick={logoutUser}>
                     Logout
@@ -58,9 +58,9 @@ const Navbar = () => {
               </Fragment>
             )}
           </ul>
-        </div>
+        </Navigation.Collapse>
       </div>
-    </nav>
+    </Navigation>
   );
 };
 
