@@ -4,11 +4,23 @@ import { Link } from 'react-router-dom';
 import Navigation from 'react-bootstrap/Navbar';
 
 import AuthContext from '../../context/auth/authContext';
+import YelpContext from '../../context/yelp/yelpContext';
+import FilterContext from '../../context/filter/filterContext';
 
 const Navbar = () => {
   const authContext = useContext(AuthContext);
+  const yelpContext = useContext(YelpContext);
+  const filterContext = useContext(FilterContext);
 
+  const { clearRestaurant } = yelpContext;
   const { isAuthenticated, logoutUser, user } = authContext;
+  const { clearFilters } = filterContext;
+
+  const logout = () => {
+    logoutUser();
+    clearFilters();
+    clearRestaurant();
+  };
 
   return (
     <Navigation
@@ -33,7 +45,7 @@ const Navbar = () => {
                   Hello, {user && user.firstName}!
                 </li>
                 <li className='nav-item'>
-                  <a href='#!' className='nav-link' onClick={logoutUser}>
+                  <a href='#!' className='nav-link' onClick={logout}>
                     Logout
                   </a>
                 </li>

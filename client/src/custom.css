@@ -20,7 +20,8 @@
   background: 50% 50% no-repeat;
   background-size: cover;
   background-clip: content-box;
-  width: 100%;
+  max-width: 500px;
+  margin: auto auto 50px;
 }
 
 .img-box:before {

@@ -2,15 +2,24 @@ import React, { useReducer, useCallback } from 'react';
 import YelpContext from './yelpContext';
 import YelpReducer from './yelpReducer';
 import axios from 'axios';
-import { GET_RESTAURANTS, RANDOM_RESTAURANT, GET_LOCATION } from '../types';
+
+import {
+  GET_RESTAURANTS,
+  GET_RESTAURANT_DETAILS,
+  GET_LOCATION,
+  LOCATION_ERROR,
+  CLEAR_RESTAURANT,
+  SET_LOADING
+} from '../types';
 
 const YelpState = props => {
   const initialState = {
     businesses: [],
-    restaurant: [],
-    loading: true,
-    latitude: '',
-    longitude: ''
+    restaurant: null,
+    restaurant_loading: null,
+    location: null,
+    latitude: null,
+    longitude: null
   };
 
   const [state, dispatch] = useReducer(YelpReducer, initialState);
@@ -21,8 +30,22 @@ const YelpState = props => {
       const res = await axios.get('/api/yelp', {
         params: params
       });
+
+      dispatch({ type: SET_LOADING });
       dispatch({ type: GET_RESTAURANTS, payload: res.data });
+
       randomRestaurant(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  //  Get Restaurant Details
+  const getRestaurantDetails = async restaurant => {
+    try {
+      const res = await axios.get(`/api/yelp/${restaurant.id}`);
+      dispatch({ type: SET_LOADING });
+      dispatch({ type: GET_RESTAURANT_DETAILS, payload: res.data });
     } catch (err) {
       console.log(err);
     }
@@ -32,7 +55,7 @@ const YelpState = props => {
   const randomRestaurant = businesses => {
     const restaurant =
       businesses[Math.floor(Math.random() * businesses.length)];
-    dispatch({ type: RANDOM_RESTAURANT, payload: restaurant });
+    getRestaurantDetails(restaurant);
   };
 
   //  Get Location
@@ -43,21 +66,30 @@ const YelpState = props => {
       const res = await new Promise((resolve, reject) => {
         geolocation.getCurrentPosition(position => resolve(position));
       });
-      dispatch({ type: GET_LOCATION, payload: res });
+
+      dispatch({ type: SET_LOADING });
+      dispatch({ type: GET_LOCATION, payload: res.coords });
+      console.log('Location loaded');
     } catch (err) {
-      console.log('Geolocation not available');
+      dispatch({ type: LOCATION_ERROR, payload: err.response.msg });
     }
   }, []);
+
+  const clearRestaurant = () => {
+    dispatch({ type: CLEAR_RESTAURANT });
+  };
 
   return (
     <YelpContext.Provider
       value={{
-        businesses: state.businesses,
         restaurant: state.restaurant,
+        restaurant_loading: state.restaurant_loading,
         latitude: state.latitude,
         longitude: state.longitude,
         getRestaurants,
-        getLocation
+        getRestaurantDetails,
+        getLocation,
+        clearRestaurant
       }}
     >
       {props.children}

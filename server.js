@@ -40,6 +40,7 @@ passportInit();
 app.use('/api/users', require('./routes/users'));
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/yelp', require('./routes/yelp'));
+app.use('/api/filters', require('./routes/filters'));
 
 const PORT = process.env.PORT || 8080;
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`));

@@ -1,10 +1,32 @@
 import React, { useContext, useState, useEffect } from 'react';
+import AlertContext from '../../context/alert/alertContext';
 import AuthContext from '../../context/auth/authContext';
+import FilterContext from '../../context/filter/filterContext';
+
+import setAuthToken from '../../context/auth/setAuthToken';
 
 const Register = props => {
+  const alertContext = useContext(AlertContext);
   const authContext = useContext(AuthContext);
+  const filterContext = useContext(FilterContext);
 
+  const { setAlert } = alertContext;
   const { registerUser, isAuthenticated, error, clearErrors } = authContext;
+  const { addFilters } = filterContext;
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      setAuthToken(localStorage.token);
+      addFilters();
+      props.history.push('/');
+    }
+
+    if (error === 'User already exists') {
+      setAlert(error, 'danger');
+      clearErrors();
+    }
+    // eslint-disable-next-line
+  }, [error, isAuthenticated, props.history]);
 
   const [user, setUser] = useState({
     firstName: '',
@@ -15,12 +37,6 @@ const Register = props => {
   });
 
   const { firstName, lastName, email, password, password2 } = user;
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      props.history.push('/');
-    }
-  });
 
   const onChange = e => setUser({ ...user, [e.target.name]: e.target.value });
 
