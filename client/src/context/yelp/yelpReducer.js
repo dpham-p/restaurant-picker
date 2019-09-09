@@ -11,8 +11,7 @@ export default (state, action) => {
     case GET_RESTAURANTS:
       return {
         ...state,
-        businesses: action.payload,
-        restaurant_loading: false
+        businesses: action.payload
       };
     case GET_RESTAURANT_DETAILS:
       return {

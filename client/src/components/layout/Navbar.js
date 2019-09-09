@@ -31,10 +31,10 @@ const Navbar = () => {
       sticky='top'
     >
       <div className='container'>
-        <Link to='/' className='navbar-brand'>
+        <Link to='/' className='d-flex navbar-brand'>
           <h2>Restaurant Picker</h2>
         </Link>
-        <small className='navbar-brand'>Powered by Yelp</small>
+
         <Navigation.Toggle aria-controls='basic-navbar=nav' />
         <Navigation.Collapse id='basic-navbar-nav'>
           <ul className='navbar-nav mr-auto' />

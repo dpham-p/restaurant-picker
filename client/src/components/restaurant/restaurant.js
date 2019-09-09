@@ -3,6 +3,7 @@ import AuthContext from '../../context/auth/authContext';
 import YelpContext from '../../context/yelp/yelpContext';
 import FilterContext from '../../context/filter/filterContext';
 import RestaurantItem from '../restaurant/RestaurantItem';
+import Spinner from '../layout/Spinner';
 
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
@@ -44,9 +45,18 @@ const Restaurant = () => {
 
   const { categories } = state;
 
-  const selectAll = e => {};
-
-  const clearAll = e => {};
+  const selectAll = e => {
+    const buttons = document.querySelectorAll('.rest-terms');
+    setState({
+      ...state,
+      categories: restaurantTerms.map(term => {
+        return term.toLowerCase();
+      })
+    });
+    buttons.forEach(button => {
+      button.classList.add('active');
+    });
+  };
 
   const onClick = e => {
     if (!e.target.className.includes('active')) {
@@ -69,11 +79,13 @@ const Restaurant = () => {
   const onSubmit = e => {
     e.preventDefault();
     if (categories !== null && categories.length > 0) {
-      const category =
-        categories[Math.floor(Math.random() * categories.length)];
-      console.log(category.toLowerCase());
+      let category = categories[Math.floor(Math.random() * categories.length)];
+
+      category.toLowerCase();
+      if (category === 'american') category = ['newamerican', 'tradamerican'];
+
       getRestaurants({
-        categories: category.toLowerCase(),
+        categories: category,
         latitude,
         longitude,
         sort_by: 'best_match',
@@ -108,7 +120,7 @@ const Restaurant = () => {
 
   return (
     <Fragment>
-      <div className='container' style={{ paddingTop: '2rem' }}>
+      <div className='container p-5'>
         <Button
           variant='outline-primary'
           onClick={() => {
@@ -127,15 +139,12 @@ const Restaurant = () => {
             <div className='d-flex justify-content-between'>
               <h4>Restaurant Types</h4>
               <ButtonGroup>
-                <Button variant='dark' onClick={selectAll}>
+                <Button variant='outline-dark' onClick={selectAll}>
                   Select All
-                </Button>
-                <Button variant='outline-dark' onClick={clearAll}>
-                  Clear All
                 </Button>
               </ButtonGroup>
             </div>
-            <div className='d-flex flex-wrap'>
+            <div className='d-flex flex-wrap p-2'>
               {restaurantTerms.map((term, i) => (
                 <Button
                   type='button'
@@ -150,7 +159,12 @@ const Restaurant = () => {
             </div>
           </div>
         </Collapse>
-        {restaurant !== null && <RestaurantItem restaurant={restaurant} />}
+
+        {restaurant !== null && !restaurant_loading ? (
+          <RestaurantItem restaurant={restaurant} />
+        ) : restaurant_loading ? (
+          <Spinner />
+        ) : null}
       </div>
       <form className='d-flex justify-content-center' onSubmit={onSubmit}>
         {!restaurant_loading && (
