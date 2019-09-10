@@ -2,7 +2,7 @@ import React, { Fragment, useContext, useEffect, useState } from 'react';
 import AuthContext from '../../context/auth/authContext';
 import YelpContext from '../../context/yelp/yelpContext';
 import FilterContext from '../../context/filter/filterContext';
-import RestaurantItem from './restaurantItem';
+import RestaurantItem from './RestaurantItem';
 import Spinner from '../layout/Spinner';
 
 import Button from 'react-bootstrap/Button';

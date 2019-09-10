@@ -1,4 +1,4 @@
-import React from './node_modules/react';
+import React from 'react';
 
 const RestaurantItem = ({
   restaurant: { name, image_url, review_count, rating, is_Closed }
