@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Restaurant from '../restaurant/Restaurant';
+import Restaurant from '../../components/restaurant/Restaurant';
 
 const Home = () => {
   return <Restaurant />;
