@@ -10,7 +10,6 @@ router.get('/', async (req, res) => {
   let searchRequest = {
     ...req.query
   };
-  console.log(searchRequest);
   try {
     const response = await client.search(searchRequest);
     res.json(response.jsonBody.businesses);

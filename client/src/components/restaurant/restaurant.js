@@ -15,6 +15,7 @@ const Restaurant = () => {
     'Chinese',
     'French',
     'Greek',
+    'Indian',
     'Italian',
     'Japanese',
     'Korean',
@@ -83,6 +84,7 @@ const Restaurant = () => {
 
       category.toLowerCase();
       if (category === 'american') category = ['newamerican', 'tradamerican'];
+      if (category === 'indian') category = 'indpak';
 
       getRestaurants({
         categories: category,
