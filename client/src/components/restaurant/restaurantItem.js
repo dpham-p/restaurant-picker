@@ -1,4 +1,4 @@
-import React from 'react';
+import React from './node_modules/react';
 
 const restaurantItem = ({
   restaurant: { name, image_url, review_count, rating, is_Closed }
@@ -23,4 +23,4 @@ const restaurantItem = ({
   );
 };
 
-export default restaurantItem;
+export default RestaurantItem;
