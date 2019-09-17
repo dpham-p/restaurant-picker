@@ -40,12 +40,13 @@ if (process.env.NODE_ENV === 'production') {
   server = http.createServer(app);
 } else {
   // Load certificates to run server in https locally
-  const certOptions = {
-    key: fs.readFileSync(path.resolve('./certs/key.pem')),
-    cert: fs.readFileSync(path.resolve('./certs/cert.pem'))
-  };
+  // const certOptions = {
+  //   key: fs.readFileSync(path.resolve('./certs/key.pem')),
+  //   cert: fs.readFileSync(path.resolve('./certs/cert.pem'))
+  // };
   console.log('Development server running...');
-  server = https.createServer(certOptions, app);
+  //server = https.createServer(certOptions, app);
+  server = http.createServer(app);
 }
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
