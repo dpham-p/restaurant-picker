@@ -18,8 +18,8 @@ connectDB();
 
 // Initialize Express middleware for JSON objects and initialize Passport
 app.use(express.json());
-app.use(passport.initialize());
-passportInit();
+// app.use(passport.initialize());
+// passportInit();
 
 // Define Routes
 app.use('/api/users', require('./routes/users'));
