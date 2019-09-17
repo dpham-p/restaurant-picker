@@ -30,7 +30,7 @@ app.use('/api/filters', require('./routes/filters'));
 let server;
 if (process.env.NODE_ENV === 'production') {
   // Run server regularly
-  console.log('Production server running...');
+  // console.log('Production server running...');
   app.use(express.static('client/build'));
 
   app.get('*', (req, res) =>
